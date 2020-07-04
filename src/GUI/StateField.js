@@ -1,13 +1,40 @@
 import React, { Component } from 'react'
-import drawApi from '../js/draw'
-const { drawList } = drawApi
+import { drawList, removeObj } from '../js/draw'
+import { partSettings } from './PartSettings'
 
+let stateField
 class EachFuncObj extends Component {
+	editPainting = () => {
+		partSettings.setState({
+			show: true,
+			type: 'func',
+			detailedType: this.props.type,
+			name: this.props.name,
+			params: this.props.params,
+			color: this.props.style.color,
+			width: this.props.style.width,
+			edit: this.props.controlObj,
+		})
+	}
+	removeThis = () => {
+		removeObj(this.props.controlObj)
+		this.props.update()
+	}
 	render() {
-		console.log(this)
 		return (
-			<div>
-				<div>{this.props.name}</div>
+			<div className='painting-obj'>
+				<div>
+					<div className='colorSquare' style={{ backgroundColor: this.props.style.color }}></div>
+					<div>{this.props.name}</div>
+				</div>
+				<div>
+					<span className='edit' onClick={this.editPainting}>
+						📝
+					</span>
+					<span className='edit' onClick={this.removeThis}>
+						🗑️
+					</span>
+				</div>
 			</div>
 		)
 	}
@@ -16,21 +43,24 @@ export default class StateField extends Component {
 	state = {
 		list: drawList,
 	}
-	update() {
+	update = () => {
 		this.setState({ list: drawList })
 	}
 	render() {
-		window.stateField = this
+		stateField = this
 		return (
 			<React.StrictMode>
+				<>
 				<div className='take-color-field'></div>
-				<div className='change-weight-field'></div>
-				<div className='graph-obj-field'>
-					{this.state.list.map((obj,i) => (
-						<EachFuncObj {...obj} key={i}/>
+				<div className='change-width-field'></div>
+				<div className='painting-obj-field'>
+					{this.state.list.map((obj, idx) => (
+						<EachFuncObj {...obj} controlObj={obj} key={idx} update={this.update} />
 					))}
 				</div>
+				</>
 			</React.StrictMode>
 		)
 	}
 }
+export { stateField }

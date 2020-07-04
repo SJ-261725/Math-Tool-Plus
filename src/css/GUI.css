@@ -129,7 +129,7 @@
 
 .right-side-tool {
   position: fixed;
-  z-index: -1;
+  z-index: 0;
   top: 0;
   right: 0;
   width: 12.5vw;
@@ -144,15 +144,38 @@
   height: 12.5vw;
   background-color: darkcyan;
 }
-.right-side-tool .change-weight-field {
+.right-side-tool .change-width-field {
   width: 100%;
   height: 1.875vw;
   background-color: darkkhaki;
 }
-.right-side-tool .graph-obj-field {
+.right-side-tool .painting-obj-field {
   flex-grow: 1;
   width: 100%;
   border-top: 5px double #fff;
+}
+.right-side-tool .painting-obj-field .painting-obj {
+  color: #fff;
+  line-height: 2.8125vw;
+  width: 100%;
+  height: 2.8125vw;
+  background-color: #353b45;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+.right-side-tool .painting-obj-field .painting-obj div {
+  display: flex;
+  align-items: center;
+}
+.right-side-tool .painting-obj-field .painting-obj .colorSquare {
+  width: 1.6875vw;
+  height: 1.6875vw;
+  border-radius: 25%;
+  margin: 0 0.3125vw;
+}
+.right-side-tool .painting-obj-field .painting-obj .edit {
+  margin-right: 0.3125vw;
 }
 
 /*# sourceMappingURL=GUI.css.map */

@@ -1,10 +1,9 @@
 import React from "react";
 import logo from "../logo.svg";
 import "../css/Nav.css";
-import Column from "../Column"
-import gui from "../js/gui"
-// import "./js/draw"
-const {globalTools,funcTools,graphTools,advancedTools} = gui
+import Column from "./Column"
+import {globalTools,funcTools,graphTools,advancedTools} from "../js/gui"
+
 function Nav() {
 	return (
 		<React.StrictMode>

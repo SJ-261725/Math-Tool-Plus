@@ -71,7 +71,7 @@ $px: 100vw / 1600;
 				box-sizing: border-box;
 				background-color: inherit;
 				border: 2px dashed #fff;
-				padding: 0 5*$px;
+				padding: 0 5 * $px;
 				font-size: 18 * $px;
 				color: #fff;
 			}
@@ -84,23 +84,23 @@ $px: 100vw / 1600;
 			input[type='number'] {
 				box-sizing: border-box;
 				font-size: 18 * $px;
-				padding-left: 5*$px;
+				padding-left: 5 * $px;
 				color: #fff;
 				width: 50 * $px;
 				height: 30 * $px;
 			}
 		}
-		.main-input{
-			margin-left: 25*$px;
-			margin-top: 30*$px;
+		.main-input {
+			margin-left: 25 * $px;
+			margin-top: 30 * $px;
 			input {
 				box-sizing: border-box;
 				font-size: 18 * $px;
-				padding-left: 5*$px;
+				padding-left: 5 * $px;
 				color: #fff;
 				width: 60 * $px;
 				height: 30 * $px;
-				margin: 0 10*$px;
+				margin: 0 10 * $px;
 			}
 		}
 	}
@@ -128,31 +128,54 @@ $px: 100vw / 1600;
 		}
 	}
 }
-.right-side-tool{
+.right-side-tool {
 	position: fixed;
-	z-index: -1;
+	z-index: 0;
 	top: 0;
 	right: 0;
-	width: 200*$px;
+	width: 200 * $px;
 	height: 100vh;
 	display: flex;
 	flex-direction: column;
 	background-color: lighten($color: #282c34, $amount: 8%);
-	.take-color-field{
-		margin-top: 20*$px;
-		width: 200*$px;
-		height: 200*$px;
+	.take-color-field {
+		margin-top: 20 * $px;
+		width: 200 * $px;
+		height: 200 * $px;
 		background-color: darkcyan;
 	}
-	.change-weight-field{
+	.change-width-field {
 		width: 100%;
-		height: 30*$px;
+		height: 30 * $px;
 		background-color: darkkhaki;
 	}
-	.graph-obj-field{
+	.painting-obj-field {
 		flex-grow: 1;
 		width: 100%;
 		border-top: 5px double #fff;
+		.painting-obj {
+			color: #fff;
+			line-height: 45 * $px;
+			width: 100%;
+			height: 45 * $px;
+			background-color: lighten($color: #282c34, $amount: 6%);
+			align-items: center;
+			display: flex;
+			justify-content: space-between;
+			div {
+				display: flex;
+				align-items: center;
+			}
+			.colorSquare {
+				width: 27 * $px;
+				height: 27 * $px;
+				border-radius: 25%;
+				margin: 0 5 * $px;
+			}
+			.edit {
+				margin-right: 5 * $px;
+			}
+		}
 		// background-color: #fff;
 	}
 }

@@ -10,7 +10,7 @@ const settings = {
 	// width: Math.floor(window.screen.width/80*0.75)*80,
 	width: 1200,
 	// height: Math.floor(window.screen.height/80*0.9)*80,
-	height: 800,
+	height: 720,
 	// unit: Math.floor((window.screen.width / 80) * 0.25) * 8,
 	unit: 40,
 	accuracy: 0.5,
@@ -42,17 +42,32 @@ const settings = {
 		},
 	},
 }
-
-const drawList = [];
-const basic = document.querySelector('#basic').getContext('2d')
-const funcField = document.querySelector('#funcField').getContext('2d')
+const drawList = [] // 所有绘制对象
+const basic = document.querySelector('#basic').getContext('2d') // 坐标轴所处画布
+const funcField = document.querySelector('#funcField').getContext('2d') // 函数,图形所处画布
+// 调整宽度
 basic.canvas.width = settings.width
 basic.canvas.height = settings.height
 funcField.canvas.width = settings.width
 funcField.canvas.height = settings.height
+// 设置初始线宽
 funcField.lineWidth = 2
+// 解构出原点方便使用
 const { O } = settings
-
+// 最终转化的一系列帮助函数 turn 由可读点转化为canvas坐标,back 相反
+function turnX(num) {
+	return O.x + num * settings.unit
+}
+function backX(num) {
+	return (num - O.x) / settings.unit
+}
+function turnY(num) {
+	return O.y - num * settings.unit
+}
+function backY(num) {
+	return (O.y - num) / settings.unit
+}
+// 函数绘制对象的构造函数
 class DrawFunction {
 	constructor(name, params, type, style) {
 		this.name = name
@@ -60,7 +75,82 @@ class DrawFunction {
 		this.type = type
 		this.style = style
 		drawList.push(this)
-		console.log(drawList);
+		// console.log(drawList);
+	}
+	drawFunc() {
+		/**
+		 * type:
+		 * 	1: 一次函数
+		 * 	2: 二次函数
+		 * 	-1: 反比例函数一般式
+		 * 	-2: 三角函数cos
+		 * 	-3: 三角函数sin
+		 * 	-4: 二次函数顶点式
+		 */
+		const { params, type, style } = this
+		const { width, color } = style
+		const xMax = settings.cols / 2
+		const xMin = -settings.cols / 2
+		funcField.beginPath()
+		funcField.lineWidth = width
+		funcField.strokeStyle = color
+		switch (type) {
+			case 1: {
+				const yMin = params[0] * xMin + params[1]
+				const yMax = params[0] * xMax + params[1]
+				funcField.moveTo(turnX(xMin), turnY(yMin))
+				funcField.lineTo(turnX(xMax), turnY(yMax))
+				break
+			}
+			case -1: {
+				const yMin = params[0] / xMin
+				funcField.moveTo(turnX(xMin), turnY(yMin))
+				for (let x = turnX(xMin); x < O.x; x += settings.accuracy) {
+					const y = params[0] / backX(x)
+					funcField.lineTo(x, turnY(y))
+				}
+				funcField.moveTo(O.x + settings.accuracy, turnY(params[0] / backX(O.x + settings.accuracy)))
+				for (let x = O.x + settings.accuracy; x <= turnX(xMax); x += settings.accuracy) {
+					const y = params[0] / backX(x)
+					funcField.lineTo(x, turnY(y))
+				}
+				break
+			}
+			case -2:
+			case -3: {
+				const map = {
+					'-2': 'sin',
+					'-3': 'cos',
+				}
+				const fx = Math[map[type]]
+				const yMin = fx(params[0] * xMin)
+				funcField.moveTo(turnX(xMin), turnY(yMin))
+				for (let x = turnX(xMin); x <= turnX(xMax); x += settings.accuracy) {
+					const y = fx(backX(x) * params[0])
+					funcField.lineTo(x, turnY(y))
+				}
+				break
+			}
+			case -4: {
+				const yMin = params[0] * (xMin - params[1]) ** 2 + params[2]
+				funcField.moveTo(turnX(xMin), turnY(yMin))
+				for (let x = turnX(xMin); x <= turnX(xMax); x += settings.accuracy) {
+					const y = params[0] * (backX(x) - params[1]) ** 2 + params[2]
+					funcField.lineTo(x, turnY(y))
+				}
+				break
+			}
+			default: {
+				const yMin = params[0] * xMin ** type + params[1] * xMin + params[2]
+				funcField.moveTo(turnX(xMin), turnY(yMin))
+				for (let x = turnX(xMin); x <= turnX(xMax); x += settings.accuracy) {
+					const y = params[0] * backX(x) ** type + params[1] * backX(x) + params[2]
+					funcField.lineTo(x, turnY(y))
+				}
+				break
+			}
+		}
+		funcField.stroke()
 	}
 }
 // 绘制坐标系
@@ -114,98 +204,31 @@ function xOy() {
 }
 xOy()
 
-function turnX(num) {
-	return O.x + num * settings.unit
+// 重新绘制所有的函数,图形
+function reDraw() {
+	funcField.clearRect(0, 0, settings.width, settings.height)
+	drawList.forEach(obj => obj.drawFunc())
 }
-function backX(num) {
-	return (num - O.x) / settings.unit
-}
-function turnY(num) {
-	return O.y - num * settings.unit
-}
-function backY(num) {
-	return (O.y - num) / settings.unit
-}
-
-/**
- * type:
- * 	1: 一次函数
- * 	2: 二次函数
- * 	-1: 反比例函数
- * 	-2: 三角函数cos
- * 	-3: 三角函数sin
- * 	-4: 三角函数tan
- */
-function drawFunc(funcObj) {
-	const { params, type, style } = funcObj
-	const { width, color } = style
-	const xMax = settings.cols / 2
-	const xMin = -settings.cols / 2
-	funcField.beginPath()
-	funcField.lineWidth = width
-	funcField.strokeStyle = color
-	switch (type) {
-		case 1: {
-			const yMin = params[0] * xMin + params[1]
-			const yMax = params[0] * xMax + params[1]
-			funcField.moveTo(turnX(xMin), turnY(yMin))
-			funcField.lineTo(turnX(xMax), turnY(yMax))
-			break
-		}
-		case -1: {
-			const yMin = params[0] / xMin
-			funcField.moveTo(turnX(xMin), turnY(yMin))
-			for (let x = turnX(xMin); x < O.x; x += settings.accuracy) {
-				const y = params[0] / backX(x)
-				funcField.lineTo(x, turnY(y))
-			}
-			funcField.moveTo(O.x + settings.accuracy, turnY(params[0] / backX(O.x + settings.accuracy)))
-			for (let x = O.x + settings.accuracy; x <= turnX(xMax); x += settings.accuracy) {
-				const y = params[0] / backX(x)
-				funcField.lineTo(x, turnY(y))
-			}
-			break
-		}
-		case -2:
-		case -3:{
-			const map = {
-				"-2":"sin",
-				"-3":"cos"
-			}
-			const fx = Math[map[type]]
-			const yMin = fx(params[0] * xMin)
-			funcField.moveTo(turnX(xMin), turnY(yMin))
-			for (let x = turnX(xMin); x <= turnX(xMax); x += settings.accuracy) {
-				const y = fx(backX(x)*params[0])
-				funcField.lineTo(x, turnY(y))
-			}
-			break
-		}
-		default: {
-			const yMin = params[0] * xMin ** type + params[1] * xMin + params[2]
-			funcField.moveTo(turnX(xMin), turnY(yMin))
-			for (let x = turnX(xMin); x <= turnX(xMax); x += settings.accuracy) {
-				const y = params[0] * backX(x) ** type + params[1] * backX(x) + params[2]
-				funcField.lineTo(x, turnY(y))
-			}
-			break
-		}
-	}
-	funcField.stroke()
+// 移除某一个绘制对象
+function removeObj(obj) {
+	drawList.splice(drawList.indexOf(obj), 1)
+	reDraw()
 }
 // let line1 = new DrawFunction('a', [1, 4, 0], 1, { width: 2, color: '#61dafb' })
-// let line2 = new DrawFunction('a', [-2, 0, 0], -1, { width: 3, color: '#61dafb' })
+// let line2 = new DrawFunction('b', [-2, 0, 0], -1, { width: 3, color: '#61dafb' })
 // let line3 = new DrawFunction('a', [-2, 8, 5], 2, { width: 6, color: 'green' })
 // let line3 = new DrawFunction('a', [1, 0, 0], -3, { width: 6, color: 'green' })
 // let line4 = new DrawFunction('a', [1, 0, 0], 3, { width: 4, color: 'pink' })
 // let line4 = new DrawFunction('a', [2, 0, 0], -2, { width: 4, color: 'pink' })
-// drawFunc(line1)
-// drawFunc(line2)
-// drawFunc(line3)
-// drawFunc(line4)
-
-export default {
-	DrawFunction,
-	drawFunc,
-	drawList
+// line1.drawFunc()
+// line2.drawFunc()
+// line3.drawFunc()
+// line4.drawFunc()
+function exportImg() {
+	basic.drawImage(document.querySelector('#funcField'), 0, 0)
+	const data = document.querySelector('#basic').toDataURL('image/png')
+	xOy()
+	return data
 }
+window.exportImg = exportImg
+export { DrawFunction, drawList, exportImg, reDraw, removeObj }

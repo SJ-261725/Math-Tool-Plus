@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Nav from './Nav';
+import Nav from './GUI/Nav';
 // import "./js/olddraw"
 import "./js/draw"
 import PartSettings from './GUI/PartSettings'

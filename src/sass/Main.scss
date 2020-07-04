@@ -1,7 +1,7 @@
 $px: 100vw / 1600;
 $nav-height: 25 * $px;
 main {
-    position: relative;
+	position: relative;
 	width: 100vw;
 	height: calc(#{str-insert($string: '100vh - ', $insert: #{$nav-height}, $index: 9)});
 }

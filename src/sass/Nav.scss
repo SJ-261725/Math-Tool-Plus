@@ -5,10 +5,11 @@ body {
 	background-color: lighten($color: #282c34, $amount: 2%);
 }
 nav {
+	position: relative;
+	z-index: 999;
 	width: 100%;
 	height: 25 * $px;
 	display: flex;
-	// align-items: center;
 	font-size: 17 * $px;
 	background-color: #282c34;
 	color: #fff;
@@ -22,18 +23,41 @@ nav {
 		overflow: hidden;
 		&:hover {
 			height: max-content;
+			overflow: visible;
 		}
 		.col-title {
 			line-height: 25 * $px;
 		}
 		.col-items {
 			margin-top: 3px;
+			background-color: lighten($color: #282c34, $amount: 2%);
 		}
 		.item {
 			padding: 3 * $px 0;
 			font-size: 15 * $px;
 			&:hover {
 				background-color: lighten($color: #282c34, $amount: 15%);
+			}
+		}
+		.item-nav {
+			@extend .item;
+			position: relative;
+			overflow: visible;
+			.hidden-layer {
+				position: absolute;
+				width: 100 * $px;
+				top: 0%;
+				left: 100%;
+				display: none;
+				background-color: lighten($color: #282c34, $amount: 2%);
+			}
+			&::after {
+				position: absolute;
+				left: 80 * $px;
+				content: '▷';
+			}
+			&:hover .hidden-layer {
+				display: block;
 			}
 		}
 	}
@@ -43,19 +67,12 @@ nav {
 		.item {
 			text-shadow: none;
 		}
+		.item-nav {
+			text-shadow: none;
+		}
 		img {
 			height: 25 * $px;
 			vertical-align: top;
-		}
-		&::after {
-			content: '';
-			display: block;
-			position: absolute;
-			top: 5 * $px;
-			left: 112 * $px;
-			height: 15 * $px;
-			width: 2 * $px;
-			background-color: rgba($color: #ffffff, $alpha: 0.8);
 		}
 	}
 	#select-bar {
