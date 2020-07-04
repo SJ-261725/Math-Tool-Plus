@@ -1,0 +1,158 @@
+$px: 100vw / 1600;
+
+.part-settings {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	width: 800 * $px;
+	height: 500 * $px;
+	transition: width 0.3s;
+	overflow: hidden;
+	background-color: lighten($color: #282c34, $amount: 2%);
+	border-radius: 10 * $px;
+	border: 4 * $px solid #61dafb;
+	.top-bar {
+		position: relative;
+		width: 100%;
+		height: 30 * $px;
+		border-bottom: 2px solid #fff;
+		.close {
+			position: absolute;
+			right: 0;
+			width: 6%;
+			height: 100%;
+			transition: background-color 0.3s;
+			border-top-right-radius: 5 * $px;
+			text-align: center;
+			line-height: 30 * $px;
+			color: #fff;
+			&:hover {
+				background-color: red;
+			}
+		}
+	}
+	.func-settings {
+		width: 100%;
+		height: (500 - 48) * $px;
+		overflow: hidden;
+		color: #fff;
+		font-size: 20 * $px;
+		input {
+			background-color: inherit;
+			border: 2px dashed #fff;
+		}
+		.basic-attr {
+			position: relative;
+			width: 100%;
+			height: 50 * $px;
+			box-sizing: border-box;
+			overflow: hidden;
+			display: flex;
+			align-items: center;
+			flex-shrink: 0;
+			flex-basis: 0;
+			padding: 0 10 * $px;
+			div {
+				height: 100%;
+			}
+			.right {
+				position: absolute;
+				right: 15 * $px;
+				display: flex;
+				align-items: center;
+			}
+			#name {
+				margin-left: 10 * $px;
+				width: 200 * $px;
+				height: 75%;
+				box-sizing: border-box;
+				background-color: inherit;
+				border: 2px dashed #fff;
+				padding: 0 5*$px;
+				font-size: 18 * $px;
+				color: #fff;
+			}
+			input[type='color'] {
+				width: 30 * $px;
+				height: 30 * $px;
+				margin-right: 10 * $px;
+				padding: 0;
+			}
+			input[type='number'] {
+				box-sizing: border-box;
+				font-size: 18 * $px;
+				padding-left: 5*$px;
+				color: #fff;
+				width: 50 * $px;
+				height: 30 * $px;
+			}
+		}
+		.main-input{
+			margin-left: 25*$px;
+			margin-top: 30*$px;
+			input {
+				box-sizing: border-box;
+				font-size: 18 * $px;
+				padding-left: 5*$px;
+				color: #fff;
+				width: 60 * $px;
+				height: 30 * $px;
+				margin: 0 10*$px;
+			}
+		}
+	}
+	.bottom {
+		position: absolute;
+		bottom: 18 * $px;
+		display: flex;
+		justify-content: space-evenly;
+		width: 100%;
+		height: 48 * $px;
+		color: #fff;
+		div {
+			width: 16%;
+			height: 100%;
+			box-sizing: border-box;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border: 3 * $px solid #61dafb;
+			border-radius: #{10 * $px} / #{15 * $px};
+			transition: background-color 0.3s;
+			&:hover {
+				background-color: lighten($color: #282c34, $amount: 5%);
+			}
+		}
+	}
+}
+.right-side-tool{
+	position: fixed;
+	z-index: -1;
+	top: 0;
+	right: 0;
+	width: 200*$px;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	background-color: lighten($color: #282c34, $amount: 8%);
+	.take-color-field{
+		margin-top: 20*$px;
+		width: 200*$px;
+		height: 200*$px;
+		background-color: darkcyan;
+	}
+	.change-weight-field{
+		width: 100%;
+		height: 30*$px;
+		background-color: darkkhaki;
+	}
+	.graph-obj-field{
+		flex-grow: 1;
+		width: 100%;
+		border-top: 5px double #fff;
+		// background-color: #fff;
+	}
+}

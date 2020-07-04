@@ -1,14 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import Nav from './Nav';
+// import "./js/olddraw"
+import "./js/draw"
+import PartSettings from './GUI/PartSettings'
+import StateField from './GUI/StateField'
+import "./MTPP.css"
+import "./css/Main.css"
+import "./css/GUI.css"
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <Nav />,
+  document.querySelector('nav')
+);
+ReactDOM.render(
+    <StateField />,
+  document.querySelector('.right-side-tool')
+);
+ReactDOM.render(
+  <PartSettings/>,
+  document.querySelector('#alert')
 );
 
 // If you want your app to work offline and load faster, you can change

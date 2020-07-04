@@ -1,0 +1,158 @@
+.part-settings {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 50vw;
+  height: 31.25vw;
+  transition: width 0.3s;
+  overflow: hidden;
+  background-color: #2c313a;
+  border-radius: 0.625vw;
+  border: 0.25vw solid #61dafb;
+}
+.part-settings .top-bar {
+  position: relative;
+  width: 100%;
+  height: 1.875vw;
+  border-bottom: 2px solid #fff;
+}
+.part-settings .top-bar .close {
+  position: absolute;
+  right: 0;
+  width: 6%;
+  height: 100%;
+  transition: background-color 0.3s;
+  border-top-right-radius: 0.3125vw;
+  text-align: center;
+  line-height: 1.875vw;
+  color: #fff;
+}
+.part-settings .top-bar .close:hover {
+  background-color: red;
+}
+.part-settings .func-settings {
+  width: 100%;
+  height: 28.25vw;
+  overflow: hidden;
+  color: #fff;
+  font-size: 1.25vw;
+}
+.part-settings .func-settings input {
+  background-color: inherit;
+  border: 2px dashed #fff;
+}
+.part-settings .func-settings .basic-attr {
+  position: relative;
+  width: 100%;
+  height: 3.125vw;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  flex-basis: 0;
+  padding: 0 0.625vw;
+}
+.part-settings .func-settings .basic-attr div {
+  height: 100%;
+}
+.part-settings .func-settings .basic-attr .right {
+  position: absolute;
+  right: 0.9375vw;
+  display: flex;
+  align-items: center;
+}
+.part-settings .func-settings .basic-attr #name {
+  margin-left: 0.625vw;
+  width: 12.5vw;
+  height: 75%;
+  box-sizing: border-box;
+  background-color: inherit;
+  border: 2px dashed #fff;
+  padding: 0 0.3125vw;
+  font-size: 1.125vw;
+  color: #fff;
+}
+.part-settings .func-settings .basic-attr input[type=color] {
+  width: 1.875vw;
+  height: 1.875vw;
+  margin-right: 0.625vw;
+  padding: 0;
+}
+.part-settings .func-settings .basic-attr input[type=number] {
+  box-sizing: border-box;
+  font-size: 1.125vw;
+  padding-left: 0.3125vw;
+  color: #fff;
+  width: 3.125vw;
+  height: 1.875vw;
+}
+.part-settings .func-settings .main-input {
+  margin-left: 1.5625vw;
+  margin-top: 1.875vw;
+}
+.part-settings .func-settings .main-input input {
+  box-sizing: border-box;
+  font-size: 1.125vw;
+  padding-left: 0.3125vw;
+  color: #fff;
+  width: 3.75vw;
+  height: 1.875vw;
+  margin: 0 0.625vw;
+}
+.part-settings .bottom {
+  position: absolute;
+  bottom: 1.125vw;
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 3vw;
+  color: #fff;
+}
+.part-settings .bottom div {
+  width: 16%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.1875vw solid #61dafb;
+  border-radius: 0.625vw/0.9375vw;
+  transition: background-color 0.3s;
+}
+.part-settings .bottom div:hover {
+  background-color: #333842;
+}
+
+.right-side-tool {
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  right: 0;
+  width: 12.5vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #3a404b;
+}
+.right-side-tool .take-color-field {
+  margin-top: 1.25vw;
+  width: 12.5vw;
+  height: 12.5vw;
+  background-color: darkcyan;
+}
+.right-side-tool .change-weight-field {
+  width: 100%;
+  height: 1.875vw;
+  background-color: darkkhaki;
+}
+.right-side-tool .graph-obj-field {
+  flex-grow: 1;
+  width: 100%;
+  border-top: 5px double #fff;
+}
+
+/*# sourceMappingURL=GUI.css.map */
